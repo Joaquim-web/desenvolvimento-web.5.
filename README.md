@@ -1,6 +1,5 @@
 # desenvolvimento-web.5.
 entregavel de desenvolvimento web semana 5
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,8 +8,7 @@ entregavel de desenvolvimento web semana 5
   <title>Mini Pokédex</title>
 
   <style>
-    
-    body {
+        body {
       font-family: Arial, sans-serif;
       margin: 0;
       min-height: 100vh;
@@ -22,8 +20,7 @@ entregavel de desenvolvimento web semana 5
       background: linear-gradient(to bottom, #d32f2f 50%, #1565c0 50%);
     }
 
-    /* Cartão da pokédex */
-    .pokedex {
+        .pokedex {
       background: white;
       width: 100%;
       max-width: 360px;
@@ -33,8 +30,7 @@ entregavel de desenvolvimento web semana 5
       border: 4px solid #222;
     }
 
-    /* Topo vermelho com o título */
-    .topo {
+        .topo {
       background-color: #d32f2f;
       color: white;
       padding: 16px;
@@ -47,8 +43,7 @@ entregavel de desenvolvimento web semana 5
       font-size: 24px;
     }
 
-    /* Parte da busca */
-    .busca-area {
+        .busca-area {
       padding: 16px;
     }
 
@@ -80,8 +75,7 @@ entregavel de desenvolvimento web semana 5
       background-color: #0d47a1;
     }
 
-    /* Tela azul onde aparece o resultado */
-    .tela {
+        .tela {
       background-color: #1976d2;
       border-top: 4px solid #222;
       min-height: 280px;
@@ -107,8 +101,7 @@ entregavel de desenvolvimento web semana 5
       margin: 0;
     }
 
-    /* Resultado: nome em cima, depois imagem e tipos */
-    .pokemon-card {
+        .pokemon-card {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -125,8 +118,7 @@ entregavel de desenvolvimento web semana 5
       font-size: 26px;
     }
 
-    /* Círculo vermelho e branco, tipo pokébola */
-    .imagem-fundo {
+        .imagem-fundo {
       width: 170px;
       height: 170px;
       border-radius: 50%;
@@ -179,7 +171,6 @@ entregavel de desenvolvimento web semana 5
       </form>
     </div>
 
-    <!-- Aqui aparecem os 4 estados: inicial, carregando, sucesso e erro -->
     <div class="tela" id="resultado">
       <p class="mensagem">Digite o nome de um Pokémon para começar.</p>
     </div>
@@ -191,19 +182,16 @@ entregavel de desenvolvimento web semana 5
     const campoBusca = document.getElementById("busca");
     const resultado = document.getElementById("resultado");
 
-    // Estado 2: carregando
     function mostrarCarregando() {
       resultado.innerHTML = '<p class="mensagem">Carregando...</p>';
     }
 
-    // Estado 3: sucesso (o nome aparece em cima)
     function mostrarPokemon(pokemon) {
       let tiposHtml = "";
       for (let i = 0; i < pokemon.types.length; i++) {
         tiposHtml += `<span class="type-badge">${pokemon.types[i].type.name}</span>`;
       }
 
-      // se por algum motivo não tiver a imagem padrão, usa a artwork oficial
       let imagem = pokemon.sprites.front_default;
       if (!imagem) {
         imagem = pokemon.sprites.other["official-artwork"].front_default;
@@ -221,19 +209,16 @@ entregavel de desenvolvimento web semana 5
       `;
     }
 
-    // Estado 4: erro
     function mostrarErro(mensagem) {
       resultado.innerHTML = `<p class="error">${mensagem}</p>`;
     }
 
-    // Busca o pokémon na API
     async function buscarPokemon(nome) {
       mostrarCarregando();
 
       try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${nome}`);
 
-        // o fetch NÃO dá erro sozinho no 404, por isso checamos response.ok
         if (!response.ok) {
           if (response.status === 404) {
             mostrarErro("Pokémon não encontrado");
@@ -244,16 +229,14 @@ entregavel de desenvolvimento web semana 5
         }
 
         const dados = await response.json();
-        console.log(dados); // pra você ver os dados no console (F12)
+        console.log(dados);
         mostrarPokemon(dados);
       } catch (erro) {
-        // cai aqui se ficar sem internet ou se o navegador bloquear o pedido
         console.log("Erro:", erro);
         mostrarErro("Não foi possível conectar. Verifique sua internet.");
       }
     }
 
-    // Quando clica em Buscar (ou aperta Enter)
     formulario.addEventListener("submit", function (evento) {
       evento.preventDefault();
 
